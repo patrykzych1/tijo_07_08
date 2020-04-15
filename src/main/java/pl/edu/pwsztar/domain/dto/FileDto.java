@@ -1,6 +1,21 @@
 package pl.edu.pwsztar.domain.dto;
 
-public class FileDto {
+import org.springframework.core.io.InputStreamResource;
 
-    //TODO: potrzebujemy pola i metody
+public class FileDto {
+    private long fileLength;
+    private InputStreamResource inputStreamResource;
+
+    public FileDto(long fileLength, InputStreamResource inputStreamResource){
+        this.fileLength = fileLength;
+        this.inputStreamResource = inputStreamResource;
+    }
+
+    public long getFileLength() {
+        return fileLength;
+    }
+
+    public InputStreamResource getInputStreamResource() {
+        return inputStreamResource;
+    }
 }

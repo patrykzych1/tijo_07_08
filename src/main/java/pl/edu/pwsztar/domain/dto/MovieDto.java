@@ -42,4 +42,9 @@ public class MovieDto implements Serializable {
     public void setYear(Integer year) {
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return year + " " + title;
+    }
 }

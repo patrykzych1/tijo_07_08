@@ -10,6 +10,8 @@ public interface MovieService {
 
     List<MovieDto> findAll();
 
+    List<MovieDto> findAllOrderedByYearDesc();
+
     void createMovie(CreateMovieDto createMovieDto);
 
     void deleteMovie(Long movieId);

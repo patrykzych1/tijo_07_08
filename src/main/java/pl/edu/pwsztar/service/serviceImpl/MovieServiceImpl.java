@@ -3,6 +3,7 @@ package pl.edu.pwsztar.service.serviceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.edu.pwsztar.domain.converter.Converter;
 import pl.edu.pwsztar.domain.dto.CreateMovieDto;
@@ -43,6 +44,11 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDto> findAll() {
         List<Movie> movies = movieRepository.findAll();
         return movieListMapper.convert(movies);
+    }
+
+    @Override
+    public List<MovieDto> findAllOrderedByYearDesc() {
+        return movieListMapper.convert(movieRepository.findAll(new Sort(Sort.Direction.DESC, "year")));
     }
 
     @Override
