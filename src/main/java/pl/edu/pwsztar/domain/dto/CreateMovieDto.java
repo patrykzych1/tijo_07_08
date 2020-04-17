@@ -16,6 +16,7 @@ public class CreateMovieDto implements Serializable {
         year = builder.year;
     }
 
+
     public String getTitle() {
         return title;
     }
@@ -45,10 +46,10 @@ public class CreateMovieDto implements Serializable {
         public Builder() {
         }
 
-        public Builder(CreateMovieDto copy) {
-            this.title = copy.getTitle();
-            this.image = copy.getImage();
-            this.year = copy.getYear();
+        public Builder(CreateMovieDto createMovieDto) {
+            this.title = createMovieDto.getTitle();
+            this.image = createMovieDto.getImage();
+            this.year = createMovieDto.getYear();
         }
 
         public Builder title(String title) {

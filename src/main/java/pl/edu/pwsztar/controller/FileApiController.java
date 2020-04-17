@@ -3,7 +3,6 @@ package pl.edu.pwsztar.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.edu.pwsztar.domain.dto.FileDto;
-import pl.edu.pwsztar.service.FileService;
+import pl.edu.pwsztar.domain.files.FileGenerator;
 import pl.edu.pwsztar.service.MovieService;
 
 import java.io.*;
@@ -22,14 +21,14 @@ import java.util.Date;
 @Controller
 @RequestMapping(value="/api")
 public class FileApiController {
-
+    private final FileGenerator fileGenerator;
+    private final MovieService movieService;
     private static final Logger LOGGER = LoggerFactory.getLogger(MovieApiController.class);
-    private final FileService fileService;
 
     @Autowired
-    public FileApiController(FileService fileService)
-    {
-        this.fileService = fileService;
+    public FileApiController(FileGenerator fileGenerator, MovieService movieService) {
+        this.fileGenerator = fileGenerator;
+        this.movieService = movieService;
     }
 
     @CrossOrigin
@@ -37,17 +36,15 @@ public class FileApiController {
     public ResponseEntity<Resource> downloadTxt() throws IOException {
         LOGGER.info("--- download txt file ---");
 
-        // TODO: --- Kod wymagajacy refaktoryzacji ---
-        // TODO: Zanim zaczniesz refaktorowac pomysl o zasadzie KISS
 
-        FileDto fileDto = fileService.downloadTxt();
+        FileDto fileDto = new FileDto(movieService.findAll());
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + "test_"+(new Date().getTime())+".txt")
-                .contentLength(fileDto.getFileLength())
+                .contentLength(fileGenerator.toTxt(fileDto).contentLength())
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(fileDto.getInputStreamResource());
+                .body(fileGenerator.toTxt(fileDto));
 
-        // TODO: --- Kod wymagajacy refaktoryzacji ---
+
     }
 }

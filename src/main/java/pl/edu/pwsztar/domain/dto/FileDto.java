@@ -2,20 +2,16 @@ package pl.edu.pwsztar.domain.dto;
 
 import org.springframework.core.io.InputStreamResource;
 
+import java.util.List;
+
 public class FileDto {
-    private long fileLength;
-    private InputStreamResource inputStreamResource;
+    private List<MovieDto> fileDtoList;
 
-    public FileDto(long fileLength, InputStreamResource inputStreamResource){
-        this.fileLength = fileLength;
-        this.inputStreamResource = inputStreamResource;
+    public FileDto(List<MovieDto> fileDtoList) {
+        this.fileDtoList = fileDtoList;
     }
 
-    public long getFileLength() {
-        return fileLength;
-    }
-
-    public InputStreamResource getInputStreamResource() {
-        return inputStreamResource;
+    public List<MovieDto> getFileDtoList() {
+        return fileDtoList;
     }
 }
